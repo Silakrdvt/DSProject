@@ -1,3 +1,3 @@
-com\mycompany\dspro\OgrenciNode.class
 com\mycompany\dspro\Dspro.class
-com\mycompany\dspro\OgrenciBST.class
+com\mycompany\dspro\StudentBST.class
+com\mycompany\dspro\StudentNode.class
