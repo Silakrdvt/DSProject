@@ -3,33 +3,34 @@
 ![Java](https://img.shields.io/badge/Java-24-orange?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Swing](https://img.shields.io/badge/GUI-Java%20Swing-blue?style=for-the-badge&logo=java&logoColor=white)
 ![Maven](https://img.shields.io/badge/Build-Maven-red?style=for-the-badge&logo=apachemaven&logoColor=white)
-![Algorithm](https://img.shields.io/badge/Algorithm-BST-green?style=for-the-badge&logo=tree&logoColor=white)
+![Algorithm](https://img.shields.io/badge/Algorithm-AVL%20(BST)-green?style=for-the-badge&logo=tree&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-Complete-brightgreen?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Updated-blue?style=for-the-badge)
 
-> **Discrete Mathematics Project** — A student record management system built on a **Binary Search Tree (BST)** data structure, featuring a fully interactive Java Swing GUI.
+> **Discrete Mathematics Project** — A student record management GUI backed by an AVL-balanced Binary Search Tree. The app supports safe insertion, controlled updates, validated inputs and fast searches.
 
 ---
 
 ## 📸 Preview
 
 ```
-┌────────────────────────────────────────────────┐
-│   Discrete Mathematics - Java BST System       │
-├────────────────────────────────────────────────┤
-│  Student Number: [ 150          ]              │
-│  Student Name:   [ Ayşe         ]              │
-│                                                │
-│    [ Add ]   [ Search ]   [ List Students ]    │
-├────────────────────────────────────────────────┤
-│  ✅ Added: 200 - Ahmet                         │
-│  ✅ Added: 100 - Mehmet                        │
-│  🔍 Found: 150 - Ayşe Kanmaz                  │
-│  --- Student List (Ascending by Number) ---    │
-│  Number: 100 - Name: Mehmet                    │
-│  Number: 150 - Name: Ayşe Kanmaz              │
-│  Number: 200 - Name: Ahmet                     │
-└────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────┐
+│   Discrete Mathematics - Java BST System (AVL)         │
+├────────────────────────────────────────────────────────┤
+│  Student Number: [ 150          ]                      │
+│  Student Name:   [ Ayşe         ]                      │
+│                                                        │
+│  [ Add ]  [ Update ]  [ Search ]  [ List Students ]    │
+├────────────────────────────────────────────────────────┤
+│  ✅ Added: 200 - Ahmet                                  │
+│  ✅ Added: 100 - Mehmet                                 │
+│  ⚠️ Student already exists.                             │
+│  ♻️ Updated: 150 - Ayşe Kanmaz                          │
+│  --- Student List (Ascending by Number) ---             │
+│  Number: 100 - Name: Mehmet                            │
+│  Number: 150 - Name: Ayşe Kanmaz                       │
+│  Number: 200 - Name: Ahmet                             │
+└────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -96,14 +97,16 @@ Step 4: Insert 150
 
 ---
 
-## ✨ Features
+### ✨ Features (Current)
 
-- ✅ **Add Students** — Insert by number into the correct BST position
-- 🔍 **Search by Number** — Fast O(log n) binary search
-- 🔍 **Search by Name** — Full-tree traversal with partial match support
-- 📋 **List All Students** — Automatically sorted ascending via Inorder Traversal
-- 🖥️ **Graphical Interface** — Java Swing GUI, no terminal needed
-- ⚠️ **Input Validation** — Handles empty fields and invalid inputs gracefully
+- ✅ **Add Students** — Insert by number; rejects duplicate numbers (shows "Student already exists").
+- ♻️ **Update Student** — Dedicated `Update` button that modifies the name for an existing student number.
+- 🔍 **Search by Number** — Fast O(log n) search; when both number and name are entered, number search is used.
+- 🔎 **Search by Name** — Full-tree inorder traversal with case-insensitive partial matches.
+- 📋 **List All Students** — Sorted ascending via inorder traversal.
+- 🔄 **AVL Rebalancing** — Tree auto-rebalances on insert (rotations) to keep operations near O(log n).
+- 🛡️ **Input Validation** — Number must be a positive Java `int`; name must be non-empty.
+- 🖥️ **Graphical Interface** — Java Swing GUI with clear messages for add/update/validation outcomes.
 
 ---
 
@@ -131,7 +134,7 @@ Dspro.java
 
 ---
 
-## 🔧 Classes & Methods
+## 🔧 Classes & Methods (Updated)
 
 ### `StudentNode`
 Represents a single student in the tree.
@@ -149,12 +152,11 @@ Represents a single student in the tree.
 
 | Method | Type | Description |
 |---|---|---|
-| `add(number, name)` | public | Entry point — starts recursive insert |
-| `addRecursive(node, number, name)` | private | Recursively finds the correct empty position |
-| `searchByNumber(number)` | public | Entry point — starts recursive number search |
-| `searchRecursive(node, number)` | private | Recursively navigates left/right to find the node |
-| `searchByName(node, keyword, results)` | public | Full Inorder traversal with `contains()` matching |
-| `listAscending(node, list)` | public | Inorder traversal — outputs sorted student list |
+| `add(number, name)` | public | Inserts a student; returns status (`ADDED`, `EXISTS`, `INVALID`). Rebalances the tree after insert.
+| `update(number, name)` | public | Updates the name for an existing number; returns status (`UPDATED`, `NOT_FOUND`, `INVALID`).
+| `searchByNumber(number)` | public | Fast AVL/BST lookup.
+| `searchByName(node, keyword, results)` | public | Inorder traversal that collects partial/name matches.
+| `listAscending(node, list)` | public | Inorder traversal — outputs sorted student list.
 
 ---
 
@@ -198,8 +200,8 @@ Used in both `listAscending` and `searchByName`. Visiting nodes in this order pr
 listAscending(left) → add current → listAscending(right)
 ```
 
-### 3. Binary Search (via BST structure)
-`searchByNumber` eliminates half the remaining tree at every step — this is the core power of BST.
+### 3. AVL (Self-Balancing BST)
+Insertions trigger local rotations (single/double) to maintain balance factors. This keeps tree height near O(log n) and preserves fast search/insert in most cases.
 
 ---
 
@@ -221,14 +223,15 @@ Or open in **NetBeans / IntelliJ** and run `Dspro.java` directly.
 
 ---
 
-## 🖱️ How to Use
+## 🖱️ How to Use (Updated)
 
 | Action | How |
 |---|---|
-| Add a student | Enter number + name → click **Add** |
-| Search by number | Enter number only → click **Search** |
-| Search by name | Enter name only → click **Search** |
-| View all students sorted | Click **List Students** |
+| Add a student | Enter a positive integer `number` and a non-empty `name` → click **Add**. If the number exists the operation is cancelled.
+| Update a student | Enter existing `number` and new `name` → click **Update**.
+| Search by number | Enter number (takes precedence if both fields filled) → click **Search**.
+| Search by name | Enter name only → click **Search**.
+| View all students sorted | Click **List Students**.
 
 ---
 
