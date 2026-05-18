@@ -1,0 +1,29 @@
+# Build directories
+build/
+dist/
+
+# NetBeans specific
+nbproject/private/
+nbbuild/
+nbdist/
+.nb-gradle/
+*.properties
+
+# Compiled Java files
+*.class
+*.jar
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# OS files
+.DS_Store
+Thumbs.db
+.AppleDouble
+.LSOverride
