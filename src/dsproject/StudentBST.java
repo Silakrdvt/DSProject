@@ -219,4 +219,17 @@ class StudentNode {
 
         this.left = this.right = null;
     }
+
+public void printTree(StudentNode node, String prefix, boolean isLeft) {
+
+    if (node == null) return;
+
+    System.out.println(prefix + (isLeft ? "├── " : "└── ") + node.number + " - " + node.name);
+
+    printTree(node.left, prefix + (isLeft ? "│   " : "    "), true);
+
+    printTree(node.right, prefix + (isLeft ? "│   " : "    "), false);
+
+   }
+
 }
