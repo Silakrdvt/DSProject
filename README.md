@@ -107,6 +107,8 @@ Step 4: Insert 150
 - 🔄 **AVL Rebalancing** — Tree auto-rebalances on insert (rotations) to keep operations near O(log n).
 - 🛡️ **Input Validation** — Number must be a positive Java `int`; name must be non-empty.
 - 🖥️ **Graphical Interface** — Java Swing GUI with clear messages for add/update/validation outcomes.
+- 💻 **Console Tree Visualizer** — A built-in CLI visualizer that prints the structured AVL tree shape to the console for tracking balance factors and rotations.
+
 
 ---
 
@@ -202,6 +204,12 @@ listAscending(left) → add current → listAscending(right)
 
 ### 3. AVL (Self-Balancing BST)
 Insertions trigger local rotations (single/double) to maintain balance factors. This keeps tree height near O(log n) and preserves fast search/insert in most cases.
+
+---
+
+### 4. Tree Visualizer (CLI Output)
+
+For debugging and academic evaluation, the system includes a structural visualizer inside `StudentNode`. When triggered (e.g., during student insertion or balancing), it prints a beautiful directory-style map of the AVL tree directly to the standard console output.This allows person to visually verify that the tree maintains its AVL balance properties after operations in real-time.
 
 ---
 
