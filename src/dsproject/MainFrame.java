@@ -40,10 +40,12 @@ public class MainFrame extends JFrame {
         JButton searchBtn = new JButton("Search");
         JButton updateBtn = new JButton("Update");
         JButton listBtn = new JButton("List Students");
+        JButton treeBtn = new JButton("Show Tree");
         buttonPanel.add(addBtn);
         buttonPanel.add(searchBtn);
         buttonPanel.add(updateBtn);
         buttonPanel.add(listBtn);
+        buttonPanel.add(treeBtn);
 
         // RESULT AREA
         resultArea = new JTextArea();
@@ -195,6 +197,22 @@ public class MainFrame extends JFrame {
             for (String s : list) {
                 resultArea.append(s + "\n");
             }
+        });
+
+        // SHOW TREE BUTTON
+        treeBtn.addActionListener(e -> {
+            // bst هو الكائن الذي يمثل الشجرة في MainFrame
+            if (bst.root == null) {
+                resultArea.append("⚠️ Tree is empty.\n");
+                return;
+            }
+            resultArea.setText("--- Tree Structure ---\n");
+
+            StringBuilder sb = new StringBuilder();
+            // استدعاء الدالة من داخل كائن bst
+            bst.buildTreeString(bst.root, "", false, sb);
+
+            resultArea.append(sb.toString());
         });
     }
 }

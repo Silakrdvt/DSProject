@@ -201,6 +201,21 @@ class StudentBST {
             this.status = status;
         }
     }
+
+    // أضف هذا الكود داخل ملف StudentBST.java في النهاية تماماً
+    public void buildTreeString(StudentNode node, String prefix, boolean isLeft, StringBuilder sb) {
+        if (node == null) return;
+
+        sb.append(prefix)
+                .append(isLeft ? "├── " : "└── ")
+                .append(node.number)
+                .append(" - ")
+                .append(node.name)
+                .append("\n");
+
+        buildTreeString(node.left,  prefix + (isLeft ? "│   " : "    "), true,  sb);
+        buildTreeString(node.right, prefix + (isLeft ? "│   " : "    "), false, sb);
+    }
 }
 
 class StudentNode {
@@ -219,17 +234,4 @@ class StudentNode {
 
         this.left = this.right = null;
     }
-
-public void printTree(StudentNode node, String prefix, boolean isLeft) {
-
-    if (node == null) return;
-
-    System.out.println(prefix + (isLeft ? "├── " : "└── ") + node.number + " - " + node.name);
-
-    printTree(node.left, prefix + (isLeft ? "│   " : "    "), true);
-
-    printTree(node.right, prefix + (isLeft ? "│   " : "    "), false);
-
-   }
-
 }
