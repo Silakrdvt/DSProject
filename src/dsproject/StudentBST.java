@@ -202,19 +202,28 @@ class StudentBST {
         }
     }
 
-    // أضف هذا الكود داخل ملف StudentBST.java في النهاية تماماً
     public void buildTreeString(StudentNode node, String prefix, boolean isLeft, StringBuilder sb) {
-        if (node == null) return;
+        if (root == null) {
+            return;
+        }
+        buildVerticalTree(root, "", true, sb);
+    }
 
-        sb.append(prefix)
-                .append(isLeft ? "├── " : "└── ")
+    private void buildVerticalTree(StudentNode node, String indent, boolean isLeft, StringBuilder sb) {
+        if (node == null) {
+            return;
+        }
+
+        buildVerticalTree(node.right, indent + (isLeft ? "│   " : "    "), false, sb);
+
+        sb.append(indent)
+                .append(isLeft ? "└── " : "┌── ")
                 .append(node.number)
                 .append(" - ")
                 .append(node.name)
                 .append("\n");
 
-        buildTreeString(node.left,  prefix + (isLeft ? "│   " : "    "), true,  sb);
-        buildTreeString(node.right, prefix + (isLeft ? "│   " : "    "), false, sb);
+        buildVerticalTree(node.left, indent + (isLeft ? "    " : "│   "), true, sb);
     }
 }
 
