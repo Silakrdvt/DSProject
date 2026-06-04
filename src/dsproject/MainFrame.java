@@ -25,7 +25,6 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        // INPUT PANEL
         JPanel inputPanel = new JPanel(new GridLayout(3, 2));
         inputPanel.add(new JLabel(" Student Number:"));
         numberInput = new JTextField();
@@ -34,7 +33,6 @@ public class MainFrame extends JFrame {
         nameInput = new JTextField();
         inputPanel.add(nameInput);
 
-        // BUTTON PANEL
         JPanel buttonPanel = new JPanel();
         JButton addBtn = new JButton("Add");
         JButton searchBtn = new JButton("Search");
@@ -47,7 +45,6 @@ public class MainFrame extends JFrame {
         buttonPanel.add(listBtn);
         buttonPanel.add(treeBtn);
 
-        // RESULT AREA
         resultArea = new JTextArea();
         resultArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(resultArea);
@@ -56,7 +53,6 @@ public class MainFrame extends JFrame {
         add(buttonPanel, BorderLayout.CENTER);
         add(scrollPane, BorderLayout.SOUTH);
 
-        // ADD BUTTON
         addBtn.addActionListener(e -> {
             try {
                 String numText = numberInput.getText().trim();
@@ -96,7 +92,7 @@ public class MainFrame extends JFrame {
             }
         });
 
-        // UPDATE BUTTON
+
         updateBtn.addActionListener(e -> {
             try {
                 String numText = numberInput.getText().trim();
@@ -136,13 +132,10 @@ public class MainFrame extends JFrame {
             }
         });
 
-        // SEARCH BUTTON
         searchBtn.addActionListener(e -> {
 
             String numText = numberInput.getText().trim();
             String nameText = nameInput.getText().trim();
-
-            // If number provided, always search by number
             if (!numText.isEmpty()) {
                 try {
                     long parsed = Long.parseLong(numText);
@@ -170,7 +163,6 @@ public class MainFrame extends JFrame {
                 return;
             }
 
-            // Otherwise, if name provided, search by name
             if (!nameText.isEmpty()) {
                 ArrayList<String> results = new ArrayList<>();
                 bst.searchByName(bst.root, nameText, results);
@@ -189,7 +181,6 @@ public class MainFrame extends JFrame {
             resultArea.append("⚠️ Error: Enter number or name!\n");
         });
 
-        // LIST BUTTON
         listBtn.addActionListener(e -> {
             ArrayList<String> list = new ArrayList<>();
             bst.listAscending(bst.root, list);
@@ -199,9 +190,7 @@ public class MainFrame extends JFrame {
             }
         });
 
-        // SHOW TREE BUTTON
         treeBtn.addActionListener(e -> {
-            // bst هو الكائن الذي يمثل الشجرة في MainFrame
             if (bst.root == null) {
                 resultArea.append("⚠️ Tree is empty.\n");
                 return;
@@ -209,7 +198,6 @@ public class MainFrame extends JFrame {
             resultArea.setText("--- Tree Structure ---\n");
 
             StringBuilder sb = new StringBuilder();
-            // استدعاء الدالة من داخل كائن bst
             bst.buildTreeString(bst.root, "", false, sb);
 
             resultArea.append(sb.toString());
